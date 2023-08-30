@@ -18,5 +18,9 @@ module.exports = async (req, res) => {
     console.log("Sending request to OpenAI with body:", req.body);
 
     const data = await response.json();
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
     res.status(response.status).send(data);
+
 };
