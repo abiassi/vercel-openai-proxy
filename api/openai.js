@@ -2,6 +2,17 @@ module.exports = async (req, res) => {
     const OPENAI_API_URL = 'https://api.openai.com/v1/chat/completions';
     const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
+    if (req.method === 'OPTIONS') {
+        // Preflight request. Reply successfully:
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Access-Control-Allow-Methods', 'POST');
+        res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+        res.status(200).end();
+        return;
+    }
+    
+    
+
     // Dynamically import node-fetch
     const fetch = require('node-fetch');
 
@@ -19,8 +30,6 @@ module.exports = async (req, res) => {
 
     const data = await response.json();
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
     res.status(response.status).send(data);
 
 };
